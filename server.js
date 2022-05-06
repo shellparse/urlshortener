@@ -67,7 +67,6 @@ Url.findOne({shorturl:req.params.code},"originalurl",(err,result)=>{
 });
 
 app.post('/api/shorturl', function (req,res){
-    console.log(req.body.url);
     if (/^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/i.test(req.body.url)){
       makeShort(req,res);
       }else{
