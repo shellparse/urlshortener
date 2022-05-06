@@ -50,10 +50,10 @@ app.get('/', function(req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+ //app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({
+//   extended: true
+// }));
 // Your first API endpoint
 app.get('/api/shorturl/:code', function(req, res) {
 Url.findOne({shorturl:req.params.code},"originalurl",(err,result)=>{
@@ -67,13 +67,17 @@ Url.findOne({shorturl:req.params.code},"originalurl",(err,result)=>{
 });
 
 app.post('/api/shorturl', function (req,res){
+  console.log(req.body);
     if (/^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/i.test(req.body.url)){
       makeShort(req,res);
       }else{
-        res.json({error:"invalid url"})
+        res.json({error:"invalid url????"})
  }
 });
 
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
+
+
+/// need to find a way to send a request body from front end to server based on the form fiels inputs
