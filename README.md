@@ -1,3 +1,6 @@
 # URL Shortener Microservice
 
-This is the boilerplate code for the URL Shortener Microservice project. Instructions for building your project can be found at https://www.freecodecamp.org/learn/back-end-development-and-apis/back-end-development-and-apis-projects/url-shortener-microservice.
+**a small service you give a long url and you get a maller one suitable for small text and more convenient**
+
+---
+[![short-url](https://img.shields.io/static/v1?label=shortener&message=Live&color=gray&labelColor=green)](https://gomix.herokuapp.com/)
