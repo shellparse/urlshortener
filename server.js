@@ -68,8 +68,10 @@ Url.findOne({shorturl:req.params.code},"originalurl",(err,result)=>{
 
 app.post('/api/shorturl', function (req,res){
   try{
-    if (new URL(req.body.url)){
+    if (/@^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$@iS/.test(req.body.url)){
       makeShort(req,res);
+      }else{
+        res.json({error:"invalid url"})
       }
   }catch(error){
     console.error(error.code)
