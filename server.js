@@ -32,13 +32,13 @@ async function makeShort(req,res){
     Url.create({originalurl:req.body.url,shorturl:counter},(err,result)=>{
       if(err) throw err;
       if (result) {
-        res.json({original_url:result.originalurl ,short_url:`${req.protocol}://${req.hostname}:${port}${req.originalUrl}/${result.shorturl}`});
+        res.json({original_url:result.originalurl ,short_url:`${req.protocol}://${req.hostname}${req.originalUrl}/${result.shorturl}`});
     }
   })
   }
   else{
     console.log("entry already exists");
-    res.json({original_url:result[0].originalurl,short_url:`${req.protocol}://${req.hostname}:${port}${req.originalUrl}/${result[0].shorturl}`});
+    res.json({original_url:result[0].originalurl,short_url:`${req.protocol}://${req.hostname}${req.originalUrl}/${result[0].shorturl}`});
   }
 }).catch((err)=>console.error(err));
 }
