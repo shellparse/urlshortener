@@ -15,7 +15,7 @@
     <h1>URL Shortener Microservice</h1>
     <main>
       <section>
-        <form action="api/shorturl" method="POST" enctype="application/x-www-form-urlencoded">
+        <form action="api/shorturl" method="POST">
            <fieldset>
             <legend>URL Shortener</legend>
             <label for="url_input">URL:</label>
@@ -32,22 +32,20 @@
         const result = document.querySelector('#response > div');
         const action = form.getAttribute('action');
         const method = form.getAttribute('method');
-      //console.log(new FormData(form));
         fetch(action, {
             method: method,
-            body: {url:document.getElementById("url_input").value},
+            headers:{"content-type":"application/json"},
+            body: JSON.stringify({"url":document.getElementById("url_input").value}),
         })
         .then(function(response) {
             if (response.ok) {
-                return response.text();
+                return response.json();
             } else {
                 return response.json();
             }
         })
         .then(function(output) {
-            if (result) {
-                result.innerHTML = output;
-            }
+                output.short_url?result.innerHTML=output.short_url :result.innerHTML=JSON.stringify(output);
         })
         .catch(function(error) {
             if (result) {
@@ -60,7 +58,7 @@
 });
       </script>
       <section id="response">
-        <div>5</div>
+        <div></div>
       </section>
     </main>
   </body>

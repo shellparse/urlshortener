@@ -32,13 +32,13 @@ async function makeShort(req,res){
     Url.create({originalurl:req.body.url,shorturl:counter},(err,result)=>{
       if(err) throw err;
       if (result) {
-        res.json({original_url:result.originalurl ,short_url:result.shorturl});
+        res.json({original_url:result.originalurl ,short_url:`${req.protocol}://${req.hostname}:${port}${req.originalUrl}/${result.shorturl}`});
     }
   })
   }
   else{
     console.log("entry already exists");
-    res.json({original_url:result[0].originalurl,short_url:result[0].shorturl});
+    res.json({original_url:result[0].originalurl,short_url:`${req.protocol}://${req.hostname}:${port}${req.originalUrl}/${result[0].shorturl}`});
   }
 }).catch((err)=>console.error(err));
 }
@@ -50,11 +50,9 @@ app.get('/', function(req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
- //app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({
-//   extended: true
-// }));
-// Your first API endpoint
+ app.use(bodyParser.json());
+
+//Your first API endpoint
 app.get('/api/shorturl/:code', function(req, res) {
 Url.findOne({shorturl:req.params.code},"originalurl",(err,result)=>{
   if (err) throw err;
@@ -67,11 +65,10 @@ Url.findOne({shorturl:req.params.code},"originalurl",(err,result)=>{
 });
 
 app.post('/api/shorturl', function (req,res){
-  console.log(req.body);
     if (/^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/i.test(req.body.url)){
       makeShort(req,res);
       }else{
-        res.json({error:"invalid url????"})
+        res.json({error:"invalid url"})
  }
 });
 
@@ -79,5 +76,3 @@ app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
 
-
-/// need to find a way to send a request body from front end to server based on the form fiels inputs
